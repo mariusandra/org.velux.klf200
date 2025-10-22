@@ -44,6 +44,9 @@ class VeluxHandler {
       });
       try {
       this.products = await Products.createProductsAsync(this.conn);
+      /*this.app.homey.drivers.getDrivers().forEach((driver) => {
+        this.app.log(`Initializing devices for driver ${driver.deviceTypeName}`);
+      });*/
       } catch (error) {
         this.app.error('Failed to create products', error);
       }

@@ -63,7 +63,15 @@ export default class VeluxDevice extends Homey.Device {
 
     this.registerCapabilityListener('windowcoverings_set', async (value) => {
       this.log('Setting value', 'windowcoverings_set', value);
-      await this.product?.setTargetPositionAsync(value as number).catch(this.error);
+
+      if (this.product?.Connection.KLF200SocketProtocol)
+        await this.product?.setTargetPositionAsync(value as number).catch(this.error);
+      else {
+        this.setUnavailable('connection_lost');
+        const connectionLostTrigger = this.homey.flow.getTriggerCard('connection-lost');
+        this.log('Velux connection lost when setting position');
+        await connectionLostTrigger.trigger();
+      }
     });
   }
 
