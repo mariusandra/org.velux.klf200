@@ -7,5 +7,8 @@
   },
   "1.0.2": {
     "en": "Updated app icons and description"
+  },
+  "1.1.0": {
+    "en": "Fix crash, fix expired certificate on KLF 200"
   }
 }
