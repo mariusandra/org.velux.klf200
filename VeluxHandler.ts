@@ -29,7 +29,7 @@ class VeluxHandler {
       if (!address || !password) throw new Error('Missing Velux controller settings');
       this.conn = new Connection(address);
       try {
-        await this.conn.loginAsync(password, 5).catch(this.app.error);
+        await this.conn.loginAsync(password, 5);
         this.conn?.startKeepAlive();
         this.app.log('Velux connected');
       } catch (err) {

@@ -2,6 +2,7 @@
   "name": "org.velux.klf200",
   "version": "1.0.0",
   "scripts": {
+    "prebuild": "node scripts/prepare-klf200-homey.js",
     "build": "tsc",
     "lint": "eslint --ext .js,.ts --ignore-path .gitignore ."
   },
@@ -16,6 +17,6 @@
   "dependencies": {
     "debug": "^4.4.1",
     "homey-log": "^2.1.0",
-    "klf-200-api": "^6.0.0"
+    "klf-200-api": "https://codeload.github.com/petero-dk/klf-200-api/tar.gz/refs/heads/homey"
   }
 }
