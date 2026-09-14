@@ -33,8 +33,8 @@ We welcome contributions! Please open issues or pull requests for bug fixes, fea
 This app uses [klf-200-api](https://github.com/MiSchroe/klf-200-api) for communication with the Velux KLF-200 gateway.
 
 ### Icons
-The Venetian Blind Icon is _blinds_ by Thales Muller from [Noun Project](https://thenounproject.com/browse/icons/term/blinds/) (CC BY 3.0)
-The GarageOpener icon is _Garage_ by Adrien Coquet from <a href="https://thenounproject.com/browse/icons/term/garage/" target="_blank" title="Garage Icons">Noun Project</a> (CC BY 3.0)
+- The Venetian Blind icon is _blinds_ by Thales Muller from [Noun Project](https://thenounproject.com/browse/icons/term/blinds/) (CC BY 3.0)
+- The GarageOpener icon is _Garage_ by Adrien Coquet from [Noun Project](https://thenounproject.com/browse/icons/term/garage/) (CC BY 3.0)
 
 ## License
 See LICENSE for details.
