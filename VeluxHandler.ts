@@ -1,4 +1,6 @@
-import { Connection, Products, Product } from 'klf-200-api';
+import {
+  Connection, Products, Product, StatusType,
+} from 'klf-200-api';
 import Homey from 'homey';
 
 /** How long to wait before the first reconnect attempt. */
@@ -118,9 +120,13 @@ class VeluxHandler {
 
         this.reconnectDelay = INITIAL_RECONNECT_DELAY;
 
+        // Bind the devices before asking for positions, so their listeners are
+        // in place when the answers come back as events.
         if (this.onConnected) {
           await this.onConnected().catch((err) => this.app.error('Rebinding devices failed', err));
         }
+
+        await this.requestCurrentPositions();
       } catch (err) {
         failed = true;
         this.products = null;
@@ -134,6 +140,33 @@ class VeluxHandler {
         // Schedule first, then grow the delay, so the next failure waits longer.
         this.scheduleReconnect();
         this.reconnectDelay = Math.min(this.reconnectDelay * 2, MAX_RECONNECT_DELAY);
+      }
+    }
+
+    /**
+     * Ask the actuators themselves what position they are in.
+     *
+     * The gateway only remembers a position for products it has seen move
+     * since its own last restart, and answers "position unknown" for the
+     * rest. Reading the gateway alone therefore leaves most sliders empty
+     * after a gateway reboot. This polls the products directly; the answers
+     * arrive as ordinary position events.
+     */
+    private async requestCurrentPositions(): Promise<void> {
+      const products = this.products;
+      if (!products) return;
+
+      const nodeIDs = products.Products
+        .filter((product: Product) => !!product)
+        .map((product: Product) => product.NodeID);
+
+      if (nodeIDs.length === 0) return;
+
+      try {
+        await products.requestStatusAsync(nodeIDs, StatusType.RequestCurrentPosition);
+        this.app.log(`Velux requested the current position of ${nodeIDs.length} products`);
+      } catch (err) {
+        this.app.log('Velux could not request current positions:', (err as Error)?.message ?? err);
       }
     }
 
