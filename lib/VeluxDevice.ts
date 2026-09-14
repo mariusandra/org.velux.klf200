@@ -56,7 +56,9 @@ export default class VeluxDevice extends Homey.Device {
         throw new Error(this.homey.__('errors.not_connected'));
       }
 
-      await this.product.setTargetPositionAsync(this.toVeluxScale(value as number));
+      const veluxValue = this.toVeluxScale(value as number);
+      const sessionID = await this.product.setTargetPositionAsync(veluxValue);
+      this.log(`Sent position homey=${value} velux=${veluxValue} raw=${Math.round(0xc800 * veluxValue)} session=${sessionID}`);
     });
 
     await this.bindProduct();
@@ -88,6 +90,10 @@ export default class VeluxDevice extends Homey.Device {
 
     this.product = product;
     this.log('Associated product', product.Name);
+    this.log(`Product detail: node=${product.NodeID} type=${product.TypeID} subType=${product.SubType}`
+      + ` variation=${product.NodeVariation} state=${product.State}`
+      + ` currentRaw=${product.CurrentPositionRaw} targetRaw=${product.TargetPositionRaw}`
+      + ` runStatus=${product.RunStatus} statusReply=${product.StatusReply}`);
 
     this.propertyListener = (property: PropertyChangedEvent) => this.onPropertyChanged(property);
     product.propertyChangedEvent.on(this.propertyListener);
