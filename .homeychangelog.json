@@ -13,5 +13,8 @@
   },
   "1.1.1": {
     "en": "Fix total crash from v1.1.0"
+  },
+  "1.2.0": {
+    "en": "Fix reversed position on shutters, blinds, awnings and garage openers; show the real position instead of an empty slider; reconnect to the gateway automatically."
   }
 }

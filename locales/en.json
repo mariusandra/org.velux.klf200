@@ -1,7 +1,7 @@
 {
   "settings": {
     "title": "Velux Settings",
-    "subtitle": "Please log in"
+    "subtitle": "Address and password of your KLF 200 gateway"
   },
   "form": {
     "address": {
@@ -12,5 +12,8 @@
       "label": "Password",
       "placeholder": "Enter password"
     }
+  },
+  "errors": {
+    "not_connected": "Not connected to the KLF 200 gateway"
   }
 }
