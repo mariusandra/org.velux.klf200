@@ -57,8 +57,10 @@ export default class VeluxDevice extends Homey.Device {
       }
 
       const veluxValue = this.toVeluxScale(value as number);
+      const currentRaw = this.product.CurrentPositionRaw;
       const sessionID = await this.product.setTargetPositionAsync(veluxValue);
-      this.log(`Sent position homey=${value} velux=${veluxValue} raw=${Math.round(0xc800 * veluxValue)} session=${sessionID}`);
+      this.log(`Sent position homey=${value} velux=${veluxValue} raw=${Math.round(0xc800 * veluxValue)}`
+        + ` fromRaw=${currentRaw}${currentRaw === 0xf7ff ? ' (UNKNOWN)' : ''} session=${sessionID}`);
     });
 
     await this.bindProduct();
